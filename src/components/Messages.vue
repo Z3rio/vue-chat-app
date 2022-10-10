@@ -1,5 +1,11 @@
 <script setup lang="ts"></script>
 
-<template></template>
+<template>
+  <div class="messages-container"></div>
+</template>
 
-<style scoped></style>
+<style scoped>
+.messages-container {
+  flex: 1;
+}
+</style>

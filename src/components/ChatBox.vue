@@ -28,6 +28,9 @@ const contact = ref({
 <style scoped>
 .chat-container {
   flex: 1;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-info {
