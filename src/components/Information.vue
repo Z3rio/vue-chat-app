@@ -1,18 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { getAuth } from "@/firebase";
+import UserDropdown from "./UserDropdown.vue";
+
+const { user } = getAuth();
+const dropdownOpen = ref(false);
+</script>
 
 <template>
   <div class="information-container">
     <h1>Zerio-Chat</h1>
-    <div class="profile-info">
+    <div class="profile-info" v-if="user" @click="dropdownOpen = !dropdownOpen">
       <img
         src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
         alt="Profile picture"
       />
-      <h2>Zerio</h2>
+      <h2>{{ user.displayName }}</h2>
+      <span
+        class="mdi"
+        :class="dropdownOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+      ></span>
     </div>
-    <!-- <div class="profile-actions">
-      <button>Logout</button>
-    </div> -->
+    <UserDropdown v-if="dropdownOpen" />
   </div>
 </template>
 
@@ -23,6 +32,13 @@ h1 {
   font-size: 2rem;
 
   margin: 0;
+}
+
+.profile-info .mdi {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-left: 7.5px;
+  margin-top: 3px;
 }
 
 .information-container {
