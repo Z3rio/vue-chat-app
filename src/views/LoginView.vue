@@ -1,17 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getAuth } from "@/firebase";
+const { signIn } = getAuth();
+</script>
 
 <template>
   <div class="login-container">
     <h1>Zerio-Chat</h1>
     <h2>Login</h2>
-    <form>
-      <input placeholder="Email" type="email" />
-      <input placeholder="Password" type="password" />
-
-      <button>Sign in</button>
-    </form>
-
-    <p>Dont have an account? <a href="./">Register here</a></p>
+    <button @click="signIn()">Sign in with google</button>
   </div>
 </template>
 
@@ -25,7 +21,7 @@
     rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
 
   width: 20vw;
-  padding: 10vh 5vh;
+  padding: 10vh 0;
 
   left: 50%;
   top: 50%;
@@ -44,6 +40,7 @@ h1 {
 
 h2 {
   margin: 0;
+  margin-bottom: 100px;
 
   text-align: center;
   font-family: "Lato", sans-serif;
@@ -54,66 +51,9 @@ h2 {
   width: 100%;
 }
 
-p {
-  margin: 0;
-  margin-top: 25px;
-
-  text-align: center;
-  font-family: "Lato", sans-serif;
-  font-size: 1rem;
-  color: #4e4e4e;
-
-  width: 100%;
-}
-
-p a {
-  color: #5059cb;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-form {
-  margin-top: 20px;
-
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-}
-
-input,
-label {
-  width: 80%;
-
-  margin: 0 auto;
-  padding: 15px 17.5px;
-
-  font-family: "Roboto", sans-serif;
-  font-size: 1.2rem;
-
-  border: none;
-  border-bottom: 1px solid #5059cb;
-}
-
-label {
-  color: rgb(200, 200, 200);
-}
-
-label:hover {
-  cursor: pointer;
-}
-
-.mdi-arrow-collapse-down {
-  font-size: 1.5rem;
-  color: color(175, 175, 175);
-
-  margin-right: 10px;
-}
-
-input::placeholder {
-  color: rgb(200, 200, 200);
-}
-
 button {
+  display: block;
+
   width: 60%;
 
   background: #5059cb;

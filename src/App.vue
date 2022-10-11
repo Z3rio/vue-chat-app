@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { getAuth } from "@/firebase";
+import LoginView from "./views/LoginView.vue";
+import HomeView from "./views/HomeView.vue";
+const { signIn, isLoggedIn, user } = getAuth();
 </script>
 
 <template>
-  <RouterView />
+  <LoginView v-if="isLoggedIn == false" />
+  <HomeView v-if="isLoggedIn == true" />
 </template>
 
 <style>

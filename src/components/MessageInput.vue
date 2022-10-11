@@ -1,8 +1,19 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+function resizeTextarea() {
+  let textarea = document.querySelector("textarea");
+  textarea.style.height = 0;
+  let height = textarea.scrollHeight;
+  textarea.style.height = height > 150 ? "150px" : height + "px";
+}
+</script>
 
 <template>
   <div class="message-input-container">
-    <input type="text" placeholder="Your message" />
+    <textarea
+      type="text"
+      placeholder="Your message"
+      @input="resizeTextarea()"
+    />
     <div class="message-actions">
       <span class="mdi mdi-paperclip"></span>
       <span class="mdi mdi-image-size-select-actual"></span>
@@ -22,9 +33,10 @@
   display: flex;
 }
 
-input {
-  padding: 25px;
+textarea {
+  margin: 25px;
   width: 100%;
+  height: 1.3rem;
 
   outline: none;
   border: none;
@@ -33,6 +45,8 @@ input {
   font-family: "Roboto", sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
+
+  resize: none;
 
   background: transparent;
 }
@@ -73,6 +87,10 @@ button {
   outline: none;
   border: none;
   color: #fff;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .mdi {
