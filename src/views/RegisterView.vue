@@ -27,8 +27,8 @@
 
   background: #fff;
   border-radius: 7.5px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
 
   width: 20vw;
   padding: 5vh;
@@ -39,7 +39,7 @@
 }
 
 h1 {
-  margin: 0px;
+  margin: 0;
 
   text-align: center;
   font-family: "Roboto", sans-serif;
@@ -49,7 +49,7 @@ h1 {
 }
 
 h2 {
-  margin: 0px;
+  margin: 0;
 
   text-align: center;
   font-family: "Lato", sans-serif;
@@ -61,7 +61,7 @@ h2 {
 }
 
 p {
-  margin: 0px;
+  margin: 0;
   margin-top: 25px;
 
   text-align: center;

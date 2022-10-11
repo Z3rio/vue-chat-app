@@ -34,6 +34,12 @@ const chats = ref({
 
 <style scoped>
 .messages-container {
+  padding: 30px 0;
+
   flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
 </style>

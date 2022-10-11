@@ -43,7 +43,7 @@ const contact = ref({
 }
 
 .contact-info h1 {
-  margin: 0px;
+  margin: 0;
 
   color: #fff;
   font-family: "Roboto", sans-serif;

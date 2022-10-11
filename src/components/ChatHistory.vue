@@ -86,7 +86,7 @@ const chats = ref([
 }
 
 .userchat h1 {
-  margin: 0px;
+  margin: 0;
 
   color: #fff;
   font-family: "Lato", sans-serif;
@@ -100,7 +100,7 @@ const chats = ref([
 }
 
 .userchat h2 {
-  margin: 0px;
+  margin: 0;
 
   color: #ddd;
   font-family: "Lato", sans-serif;

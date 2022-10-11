@@ -22,7 +22,7 @@ h1 {
   font-family: "Lato", sans-serif;
   font-size: 2rem;
 
-  margin: 0px;
+  margin: 0;
 }
 
 .information-container {
@@ -59,7 +59,7 @@ h1 {
   font-weight: 400;
   font-size: 1.4rem;
 
-  margin: 0px;
+  margin: 0;
   margin-left: 15px;
 }
 </style>
