@@ -1,3 +1,4 @@
+![Image](https://user-images.githubusercontent.com/54480523/195437927-c764c6dd-17da-4fc1-b50d-f0b49e3416f9.png)
 # vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
