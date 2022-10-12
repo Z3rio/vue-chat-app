@@ -42,3 +42,47 @@ export function getAuth() {
 
   return { signIn, signOut, user, isLoggedIn };
 }
+
+// FIRESTORE
+const firestore = firebase.firestore();
+const messageCol = firestore.collection("messages");
+const messageQuery = messageCol.orderBy("createdAt").limit(100);
+
+export function getChat() {
+  const messages = ref([]);
+  const unmount = messageQuery.onSnapshot((snapshot: any) => {
+    let messageData = snapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .reverse();
+    messageData.forEach((obj, index) => {
+      if (obj.createdAt !== null) {
+        messageData[index].createdAt = obj.createdAt.toDate();
+      }
+    });
+
+    messages.value = messageData;
+  });
+  onUnmounted(unmount);
+
+  const { user, isLoggedIn } = getAuth();
+  const addMessage = (text: string) => {
+    if (!isLoggedIn.value) {
+      return;
+    }
+
+    const { photoURL, uid, displayName } = user.value;
+
+    messageCol.add({
+      username: displayName,
+      userid: uid,
+      profilepicture: photoURL,
+      text: text,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  };
+
+  return { messages, addMessage };
+}

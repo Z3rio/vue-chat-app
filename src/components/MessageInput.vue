@@ -1,23 +1,40 @@
 <script setup lang="ts">
-function resizeTextarea() {
-  let textarea = document.querySelector("textarea");
-  textarea.style.height = 0;
-  let height = textarea.scrollHeight;
-  textarea.style.height = height > 150 ? "150px" : height + "px";
+import { onMounted, ref } from "vue";
+import { getChat } from "@/firebase";
+
+const { addMessage } = getChat();
+
+const messageText = ref("");
+
+function resizeInput() {
+  let input = document.querySelector("input");
+  input.style.height = 0;
+  let height = input.scrollHeight;
+  input.style.height = height > 150 ? "150px" : height + "px";
+}
+
+function sendMessage() {
+  if (messageText.value.trim().length !== 0) {
+    addMessage(messageText.value);
+  }
+
+  messageText.value = "";
 }
 </script>
 
 <template>
   <div class="message-input-container">
-    <textarea
+    <input
       type="text"
       placeholder="Your message"
-      @input="resizeTextarea()"
+      @input="resizeInput()"
+      v-model="messageText"
+      v-on:keyup.enter="sendMessage()"
     />
     <div class="message-actions">
       <span class="mdi mdi-paperclip"></span>
       <span class="mdi mdi-image-size-select-actual"></span>
-      <button>Send</button>
+      <button @click="sendMessage()">Send</button>
     </div>
   </div>
 </template>
@@ -25,6 +42,7 @@ function resizeTextarea() {
 <style scoped>
 .message-input-container {
   width: 100%;
+  height: calc(1.3rem + 50px);
 
   margin-top: auto;
 
@@ -33,7 +51,7 @@ function resizeTextarea() {
   display: flex;
 }
 
-textarea {
+input {
   margin: 25px;
   width: 100%;
   height: 1.3rem;

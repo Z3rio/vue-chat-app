@@ -27,15 +27,14 @@ const contact = ref({
 
 <style scoped>
 .chat-container {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
+  width: 100%;
 }
 
 .contact-info {
   display: flex;
   align-items: center;
+
+  height: 2rem;
 
   padding: 20px 30px;
 
