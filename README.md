@@ -20,7 +20,7 @@ Simply unpack all of these files into a folder and run `npm install` through a c
 
 ### Dev server
 
-This is great if you dont have a server to host the built files on, after doing the installation instructions run `npm run dev` in your console window and it will open a local dev server on port 5173 which you can access from `http://localhost:5173
+This is great if you dont have a server to host the built files on, after doing the installation instructions run `npm run dev` in your console window and it will open a local dev server on port 3000 which you can access from `http://localhost:3000`
 
 ### Building
 
