@@ -1,0 +1,48 @@
+.swal2-popup {
+  background: #45446c !important;
+}
+
+.swal2-input-label {
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+
+  margin: 10px 0;
+}
+
+.swal2-input {
+  background: #353456 !important;
+
+  border: 1px solid #2f2e66 !important;
+  outline: none;
+
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 400;
+  font-family: "Lato", sans-serif;
+}
+
+.swal2-confirm {
+  background: #55539f !important;
+
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
+
+.swal2-cancel {
+  background: #3a3885 !important;
+
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
+
+.swal2-icon-content {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 4rem;
+}

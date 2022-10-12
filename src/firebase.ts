@@ -4,6 +4,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import { setgroups } from "process";
 import { onUnmounted, ref, computed } from "vue";
+import MessagesVue from "./components/Messages.vue";
 
 // INITIALIZATION
 firebase.initializeApp({
@@ -43,30 +44,127 @@ export function getAuth() {
   return { signIn, signOut, user, isLoggedIn };
 }
 
+// FUNCTIONS
+function GenerateUUID() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
+  );
+}
+
 // FIRESTORE
 const firestore = firebase.firestore();
+
 const messageCol = firestore.collection("messages");
 const messageQuery = messageCol.orderBy("createdAt").limit(100);
 
-export function getChat() {
-  const messages = ref([]);
-  const unmount = messageQuery.onSnapshot((snapshot: any) => {
-    let messageData = snapshot.docs
-      .map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-      .reverse();
-    messageData.forEach((obj, index) => {
-      if (obj.createdAt !== null) {
-        messageData[index].createdAt = obj.createdAt.toDate();
-      }
-    });
+const groupCol = firestore.collection("groups");
+const groupQuery = groupCol.orderBy("name").limit(100);
 
-    messages.value = messageData;
+const focusedGroup = ref("");
+const databaseData = ref(undefined);
+
+const messages = ref([]);
+const searchValue = ref("");
+
+let unmount2;
+
+export function getGroups() {
+  const groups = ref([]);
+  const unmount = groupQuery.onSnapshot((snapshot: any) => {
+    groups.value = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
   });
   onUnmounted(unmount);
 
+  const { user, isLoggedIn } = getAuth();
+  const addGroup = (name: string) => {
+    if (!isLoggedIn.value) {
+      return;
+    }
+
+    const { uid } = user.value;
+
+    groupCol.add({
+      name: name,
+      uid: GenerateUUID(),
+      owner: uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  };
+
+  const setSearchValue = (newVal: string) => {
+    searchValue.value = newVal;
+  };
+
+  const setFocusedGroup = (uid: string) => {
+    focusedGroup.value = uid;
+
+    if (unmount2 !== undefined) {
+      unmount2();
+    }
+    unmount2 = messageQuery
+      .where("groupid", "==", focusedGroup.value)
+      .onSnapshot((snapshot: any) => {
+        let messageData = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .reverse();
+        messageData.forEach((obj, index) => {
+          if (obj.createdAt !== null) {
+            messageData[index].createdAt = obj.createdAt.toDate();
+          }
+        });
+
+        messages.value = messageData;
+      });
+
+    groupCol
+      .where("uid", "==", focusedGroup.value)
+      .get()
+      .then((obj) => {
+        obj.forEach((doc) => {
+          databaseData.value = doc.data();
+        });
+      });
+
+    messageCol
+      .where("groupid", "==", focusedGroup.value)
+      .get()
+      .then((obj) => {
+        let messageData = [];
+        obj.forEach((doc, index) => {
+          let data = doc.data();
+
+          if (data.createdAt !== null) {
+            data.createdAt = data.createdAt.toDate();
+
+            messageData.push(data);
+          }
+        });
+
+        messages.value = messageData;
+      });
+  };
+
+  return {
+    groups,
+    focusedGroup,
+    searchValue,
+    setSearchValue,
+    databaseData,
+    addGroup,
+    setFocusedGroup,
+  };
+}
+
+export function getChat() {
   const { user, isLoggedIn } = getAuth();
   const addMessage = (text: string) => {
     if (!isLoggedIn.value) {
@@ -80,6 +178,7 @@ export function getChat() {
       userid: uid,
       profilepicture: photoURL,
       text: text,
+      groupid: focusedGroup.value,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
   };

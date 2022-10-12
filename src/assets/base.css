@@ -1,10 +1,11 @@
+@import "./swal2.css";
+
 body {
   background: linear-gradient(-45deg, #de6161, #2657eb);
 
   margin: 0;
 
   width: 100vw;
-  height: 100vh;
 
   overflow: hidden;
 }

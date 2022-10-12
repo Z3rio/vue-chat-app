@@ -3,6 +3,8 @@ import { ref } from "vue";
 
 import MessageInput from "./MessageInput.vue";
 import Messages from "./Messages.vue";
+import { getGroups } from "@/firebase";
+const { focusedGroup, databaseData } = getGroups();
 
 const contact = ref({
   username: "Test123123",
@@ -10,9 +12,9 @@ const contact = ref({
 </script>
 
 <template>
-  <div class="chat-container">
+  <div class="chat-container" v-if="focusedGroup !== '' && databaseData">
     <div class="contact-info">
-      <h1>{{ contact.username }}</h1>
+      <h1>{{ databaseData.name }}</h1>
 
       <div class="contact-actions">
         <span class="mdi mdi-video"></span>

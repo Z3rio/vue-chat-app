@@ -32,8 +32,8 @@ function sendMessage() {
       v-on:keyup.enter="sendMessage()"
     />
     <div class="message-actions">
-      <span class="mdi mdi-paperclip"></span>
-      <span class="mdi mdi-image-size-select-actual"></span>
+      <!-- <span class="mdi mdi-paperclip"></span>
+      <span class="mdi mdi-image-size-select-actual"></span> -->
       <button @click="sendMessage()">Send</button>
     </div>
   </div>

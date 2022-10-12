@@ -16,7 +16,11 @@ const { messages } = getChat();
           </p>
           <p class="timestamp" v-if="chat.createdAt">
             {{ chat.createdAt.toLocaleDateString() }}
-            {{ chat.createdAt.getHours() }}:{{ chat.createdAt.getMinutes() }}
+            {{ chat.createdAt.getHours() }}:{{
+              chat.createdAt.getMinutes() < 10
+                ? "0" + chat.createdAt.getMinutes()
+                : chat.createdAt.getMinutes()
+            }}
           </p>
         </div>
 

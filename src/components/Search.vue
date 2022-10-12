@@ -1,8 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { getGroups } from "@/firebase";
+
+const { setSearchValue } = getGroups();
+</script>
 
 <template>
   <div class="search-container">
-    <input type="text" placeholder="Search for contact" />
+    <input
+      type="text"
+      placeholder="Search for contact"
+      @input="
+        (event) => {
+          setSearchValue(event.target.value);
+        }
+      "
+    />
   </div>
 </template>
 

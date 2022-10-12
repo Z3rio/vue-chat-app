@@ -1,48 +1,61 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import Swal from "sweetalert2";
 
-const chats = ref([
-  {
-    username: "Test",
-    profilepicture:
-      "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
-    chats: [
-      {
-        message: "hi1asdfasdffasdfasdfasfadsfdasadsfafdsafds",
-        time: 1,
-      },
-      {
-        message: "hi2",
-        time: 2,
-      },
-    ],
-  },
-  {
-    username: "Test2",
-    profilepicture:
-      "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
-    chats: [
-      {
-        message: "hi3",
-        time: 3,
-      },
-      {
-        message: "hi4",
-        time: 4,
-      },
-    ],
-  },
-]);
+import { getGroups } from "@/firebase";
+const { addGroup, groups, setFocusedGroup, focusedGroup, searchValue } =
+  getGroups();
+
+async function NewGroup() {
+  const { value: text } = await Swal.fire({
+    target: ".home-container",
+    icon: "info",
+    input: "text",
+    inputLabel: "Create a new group",
+    inputPlaceholder: "The name of the server",
+    showCancelButton: true,
+    confirmButtonText: "Create",
+  });
+
+  if (text) {
+    addGroup(text);
+  }
+}
+
+const filterGroups = computed(() => {
+  if (groups.value !== undefined) {
+    return groups.value.filter(function (item) {
+      return (
+        item.name.toLowerCase().indexOf(searchValue.value.toLowerCase()) > -1
+      );
+    });
+  } else {
+    return {};
+  }
+});
 </script>
 
 <template>
   <div class="chathistory-container">
-    <div class="userchat" v-for="(user, index) in chats" :key="index">
-      <img :src="user.profilepicture" alt="Profile picture" />
-      <div class="userdata">
-        <h1>{{ user.username }}</h1>
-        <h2>{{ user.chats[0].message }}</h2>
+    <div
+      class="userchat"
+      v-for="(group, index) in filterGroups"
+      :key="index"
+      @click="setFocusedGroup(group.uid)"
+      :class="{ active: focusedGroup == group.uid }"
+    >
+      <div class="image">
+        {{ group.name.substring(0, 1).toUpperCase() }}
       </div>
+      <div class="userdata">
+        <h1>{{ group.name }}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="userchat new" @click="NewGroup()">
+    <div class="image">+</div>
+    <div class="userdata">
+      <h1>New group</h1>
     </div>
   </div>
 </template>
@@ -54,6 +67,12 @@ const chats = ref([
   row-gap: 10px;
 
   margin-top: 25px;
+  height: calc(100% - 233px - 2rem);
+  overflow: scroll;
+}
+
+.new {
+  margin-top: auto;
 }
 
 .userchat {
@@ -63,10 +82,21 @@ const chats = ref([
   column-gap: 25px;
 }
 
-.userchat img {
+.userchat .image {
   border-radius: 100%;
   width: 64px;
   height: 64px;
+
+  background: #65649d;
+
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .userdata {
@@ -76,13 +106,17 @@ const chats = ref([
 
   transition: 300ms;
 
-  width: 100%;
+  width: calc(100% - 89px);
 }
 
 .userchat:hover {
   cursor: pointer;
   background: #3c3b6c;
   transition: 300ms;
+}
+
+.userchat.active {
+  background: #3c3b6c;
 }
 
 .userchat h1 {

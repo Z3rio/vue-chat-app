@@ -19,5 +19,8 @@ import ChatHistory from "./ChatHistory.vue";
   max-width: 1000px;
 
   background-color: #343354;
+
+  display: flex;
+  flex-direction: column;
 }
 </style>
