@@ -1,47 +1,27 @@
 ![Image](https://user-images.githubusercontent.com/54480523/195437927-c764c6dd-17da-4fc1-b50d-f0b49e3416f9.png)
-# vue-project
 
-This template should help get you started developing with Vue 3 in Vite.
+# Vue Chat-App
 
-## Recommended IDE Setup
+This is a chat app I made to get better at Firebase and Vue in general.<br>
+I dont recommend using this code for an actual app since it may have security flaws and such, it is only for fun and educational purposes
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+## Technologies
 
-## Type Support for `.vue` Imports in TS
+- [Vite](https://vitejs.dev/)
+- [VueJS 3.0](https://vuejs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Sweetalert](https://sweetalert2.github.io/)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Installation
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471) that is more performant. You can enable it by the following steps:
+Simply unpack all of these files into a folder and run `npm install` through a console window with that folder opened.<br>
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+# Usage
 
-## Customize configuration
+### Dev server
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This is great if you dont have a server to host the built files on, after doing the installation instructions run `npm run dev` in your console window and it will open a local dev server on port 5173 which you can access from `http://localhost:5173
 
-## Project Setup
+### Building
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+This is only useable / possible if you have an actual server to run these built files on. Run `npm run build` in your console window and it will build the files into the `dist` folder. You can then upload these files to your server and it should work.
