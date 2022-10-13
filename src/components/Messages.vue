@@ -1,13 +1,24 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { getChat, getAuth } from "@/firebase";
 
 const { user, isLoggedIn } = getAuth();
 const { messages } = getChat();
+
+const sortMessages = computed(() => {
+  if (messages.value !== undefined) {
+    return messages.value.sort((a, b) => {
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    });
+  } else {
+    return [];
+  }
+});
 </script>
 
 <template>
   <div class="messages-container">
-    <div class="message" v-for="(chat, index) in messages" :key="index">
+    <div class="message" v-for="(chat, index) in sortMessages" :key="index">
       <img :src="chat.profilepicture" alt="" />
       <div class="message-content">
         <div class="info">
