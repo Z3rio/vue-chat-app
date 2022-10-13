@@ -3,7 +3,8 @@
 # Vue Chat-App
 
 This is a chat app I made to get better at Firebase and Vue in general.<br>
-I dont recommend using this code for an actual app since it may have security flaws and such, it is only for fun and educational purposes
+I dont recommend using this code for an actual app since it may have security flaws and such, it is only for fun and educational purposes<br>
+[**Live Demo**](https://portfolio.zerio-scripts.com/chat)
 
 ## Technologies
 
