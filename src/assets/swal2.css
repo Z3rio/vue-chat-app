@@ -2,13 +2,21 @@
   background: #45446c !important;
 }
 
-.swal2-input-label {
+.swal2-input-label,
+.swal2-title {
   color: #fff;
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
 
   margin: 10px 0;
+}
+
+.swal2-html-container {
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 
 .swal2-input {

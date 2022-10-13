@@ -2,9 +2,16 @@
 import { ref, computed } from "vue";
 import Swal from "sweetalert2";
 
-import { getGroups } from "@/firebase";
-const { addGroup, groups, setFocusedGroup, focusedGroup, searchValue } =
-  getGroups();
+import { getGroups, getAuth } from "@/firebase";
+const {
+  addGroup,
+  removeGroup,
+  setFocusedGroup,
+  groups,
+  focusedGroup,
+  searchValue,
+} = getGroups();
+const { user } = getAuth();
 
 async function NewGroup() {
   const { value: text } = await Swal.fire({
@@ -12,7 +19,7 @@ async function NewGroup() {
     icon: "info",
     input: "text",
     inputLabel: "Create a new group",
-    inputPlaceholder: "The name of the server",
+    inputPlaceholder: "The name of the group",
     showCancelButton: true,
     confirmButtonText: "Create",
   });
@@ -33,6 +40,21 @@ const filterGroups = computed(() => {
     return {};
   }
 });
+
+function PromptRemoveGroup(id) {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Are you sure that you want to delete this group, forever?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire("Deleted!", "The group is now deleted.", "success");
+      removeGroup(id);
+    }
+  });
+}
 </script>
 
 <template>
@@ -49,6 +71,11 @@ const filterGroups = computed(() => {
       </div>
       <div class="userdata">
         <h1>{{ group.name }}</h1>
+        <span
+          class="mdi mdi-minus"
+          v-if="group.owner == user.uid"
+          @click="PromptRemoveGroup(group.id)"
+        ></span>
       </div>
     </div>
   </div>
@@ -101,8 +128,8 @@ const filterGroups = computed(() => {
 
 .userdata {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 
   transition: 300ms;
 
@@ -126,8 +153,6 @@ const filterGroups = computed(() => {
   font-family: "Lato", sans-serif;
   font-size: 1.75rem;
 
-  width: 90%;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -145,5 +170,32 @@ const filterGroups = computed(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.userdata .mdi-minus {
+  margin-left: auto;
+
+  width: 1.3rem;
+  height: 1.3rem;
+
+  padding: 8px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  font-size: 1.3rem;
+
+  transition: 300ms;
+}
+
+.userdata .mdi-minus:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ff8f8f;
+
+  transition: 300ms;
 }
 </style>

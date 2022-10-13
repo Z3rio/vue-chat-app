@@ -9,7 +9,7 @@ const { setSearchValue } = getGroups();
   <div class="search-container">
     <input
       type="text"
-      placeholder="Search for contact"
+      placeholder="Search for group"
       @input="
         (event) => {
           setSearchValue(event.target.value);

@@ -97,6 +97,22 @@ export function getGroups() {
     });
   };
 
+  const removeGroup = async (groupId: string) => {
+    let group = groupCol.doc(groupId);
+    let groupData = await group.get();
+    groupData = groupData.data();
+
+    if (groupData.owner == user.value.uid) {
+      let groupMessages = messageCol.where("groupid", "==", groupData.uid);
+      let groupMessagesData = await groupMessages.get();
+      groupMessagesData.forEach((obj, index) => {
+        messageCol.doc(obj.id).delete();
+      });
+
+      group.delete();
+    }
+  };
+
   const setSearchValue = (newVal: string) => {
     searchValue.value = newVal;
   };
@@ -157,8 +173,10 @@ export function getGroups() {
     groups,
     focusedGroup,
     searchValue,
-    setSearchValue,
     databaseData,
+
+    setSearchValue,
+    removeGroup,
     addGroup,
     setFocusedGroup,
   };

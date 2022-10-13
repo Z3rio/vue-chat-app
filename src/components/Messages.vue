@@ -8,7 +8,11 @@ const { messages } = getChat();
 const sortMessages = computed(() => {
   if (messages.value !== undefined) {
     return messages.value.sort((a, b) => {
-      return b.createdAt.getTime() - a.createdAt.getTime();
+      if (b.createdAt !== null && a.createdAt !== null) {
+        return b.createdAt.getTime() - a.createdAt.getTime();
+      } else {
+        return 0;
+      }
     });
   } else {
     return [];
