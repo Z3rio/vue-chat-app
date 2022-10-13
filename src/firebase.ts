@@ -78,6 +78,21 @@ export function getGroups() {
       id: doc.id,
       ...doc.data(),
     }));
+
+    let foundGroup = false;
+    groups.value.forEach((group) => {
+      if (group.uid == focusedGroup.value) {
+        foundGroup = true;
+      }
+    });
+
+    if (foundGroup == false) {
+      focusedGroup.value = "";
+
+      if (unmount2 !== undefined) {
+        unmount2();
+      }
+    }
   });
   onUnmounted(unmount);
 
