@@ -60,7 +60,6 @@ const sortMessages = computed(() => {
   padding: 0 30px;
 
   display: flex;
-  align-items: center;
   column-gap: 20px;
 }
 
